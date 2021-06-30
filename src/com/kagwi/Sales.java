@@ -20,9 +20,9 @@ import org.json.simple.JSONObject;
 public class Sales {
 	private Statement st;
 	private ResultSet rs;
-	PreparedStatement pst;
+	private PreparedStatement pst;
 	private String query = "SELECT * FROM sale";
-	private String query_1 = "INSERT INTO sale VALUES (?, ?, ?)";
+	private String query_1 = "INSERT INTO sale (no_of_items, total_paid, served_by) VALUES (?, ?, ?)";
 
 	public Sales() {
 	}
@@ -52,28 +52,26 @@ public class Sales {
 		return jobsObject.toString();
 	}
 
-	@POST
-	@Path("/addSale")
-	@Consumes({ MediaType.APPLICATION_JSON })
-	public void recordSale(JSONObject sale) {
+	@GET
+	@Path("/addSale/{noOfItems}/{totalPaid}/{servedBy}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String recordSale(@PathParam("noOfItems") int noOfItems, @PathParam("totalPaid") Double totalPaid,
+			@PathParam("servedBy") String servedBy) {
 
-		int noOfItems = (int) sale.get("name");
-		Double totalPaid = (Double) sale.get("name");
-		String servedBy = (String) sale.get("name");
-
+		int i = 0;
 		try {
 			pst = new MysqlConnect().getConnection().prepareStatement(query_1);
 			pst.setInt(1, noOfItems);
 			pst.setDouble(2, totalPaid);
 			pst.setString(3, servedBy);
 
-			int i = pst.executeUpdate();
+			i = pst.executeUpdate();
 			new MysqlConnect().closeConnection();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		return servedBy + " inserted " + String.valueOf(i) + " rows";
 	}
 }
