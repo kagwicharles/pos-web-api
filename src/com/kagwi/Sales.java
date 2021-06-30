@@ -43,7 +43,7 @@ public class Sales {
 			JSONObject record = new JSONObject();
 			record.put("No. of items", rs.getString("no_of_items"));
 			record.put("Total paid", rs.getString("total_paid"));
-			record.put("Served by", rs.getDouble("served_by"));
+			record.put("Served by", rs.getString("served_by"));
 			jobsArray.add(record);
 		}
 

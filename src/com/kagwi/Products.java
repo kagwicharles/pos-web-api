@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-@Path("/allProducts")
+@Path("/Products")
 public class Products {
 
 	private Statement st;
@@ -22,6 +22,7 @@ public class Products {
 
 	@SuppressWarnings("unchecked")
 	@GET
+	@Path("/allProducts")
 	public String getAllProducts() throws SQLException, ClassNotFoundException {
 		JSONObject jobsObject = new JSONObject();
 		JSONArray jobsArray = new JSONArray();
