@@ -55,13 +55,17 @@ public class Sales {
 	@POST
 	@Path("/addSale")
 	@Consumes({ MediaType.APPLICATION_JSON })
-	public void recordSale(SaleModel sale) {
+	public void recordSale(JSONObject sale) {
+
+		int noOfItems = (int) sale.get("name");
+		Double totalPaid = (Double) sale.get("name");
+		String servedBy = (String) sale.get("name");
 
 		try {
 			pst = new MysqlConnect().getConnection().prepareStatement(query_1);
-			pst.setInt(1, sale.noOfItems);
-			pst.setDouble(2, sale.totalPaid);
-			pst.setString(3, sale.servedBy);
+			pst.setInt(1, noOfItems);
+			pst.setDouble(2, totalPaid);
+			pst.setString(3, servedBy);
 
 			int i = pst.executeUpdate();
 			new MysqlConnect().closeConnection();
