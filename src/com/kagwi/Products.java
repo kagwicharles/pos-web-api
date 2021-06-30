@@ -23,22 +23,14 @@ public class Products {
 	@SuppressWarnings("unchecked")
 	@GET
 	public String getAllProducts() throws SQLException, ClassNotFoundException {
-
-		// JSON object to put all records
 		JSONObject jobsObject = new JSONObject();
-
-		// JSON array to put jobs records
 		JSONArray jobsArray = new JSONArray();
 
-		// Create java statement
-		st = new MysqlConnect().getConnection().createStatement();
-
-		// Execute query and get result set
+		st = new MysqlConnect().getConnection().createStatement(); // create db connection
 		rs = st.executeQuery(query);
 
-		// Iterate through result set
 		while (rs.next()) {
-			JSONObject record = new JSONObject(); // New JSON object for every record in result set
+			JSONObject record = new JSONObject();
 			record.put("Product Code", rs.getString("product_code"));
 			record.put("Product Name", rs.getString("product_name"));
 			record.put("Product Price", rs.getDouble("price"));
